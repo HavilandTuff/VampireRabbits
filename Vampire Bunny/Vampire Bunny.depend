@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1512934933 source:/home/tabaka/Programowanie/VampireRabbits/bunny.cpp
+	<string>
+	<iostream>
+	"bunny.h"
+
+1512933000 /home/tabaka/Programowanie/VampireRabbits/bunny.h
+	<string>
+
+1512934836 source:/home/tabaka/Programowanie/VampireRabbits/Vampire Bunny/main.cpp
+	<iostream>
+
