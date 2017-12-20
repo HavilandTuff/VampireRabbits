@@ -4,34 +4,38 @@
 #include <list>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
+#include "names.hpp"
 using namespace std;
-enum BUNNY_COLOR{ BROWN, WHITE, BLACK, SPOTTED };
+
 class bunny
 {
-	public:
+public:
 	bunny();
 	bool get_sex();
-	//BUNNY_COLOR get_color();
-	//std::string get_name();
-	//bool is_mutant();
+	string get_color();
+	string get_name();
+	bool is_mutant();
 	int get_age();
 	void grow_bunny();
 	bunny* next_bunny;
-	private:
-	bool sex;
-	//BUNNY_COLOR color;
+private:
+	bool is_bunny_mutant;
+	string color;
 	int age;
-	//std::string name;
-	//bool is_bunny_mutant;
-	//std:: string set_name( bool sex );
+	string name;
+	bool sex;						// 0 - boy, 1 - girl
 };
 
 bunny*create_bunny(bunny* bunny_list);
 void list_bunnies(bunny* bunny_list);
 void add_age(bunny* bunny_list);
+
+/***********************************Global variables*******************/
 static int MAX_BUNNY_COUNT = 1000;
 int bunny_count = 0;
 int female_bunny_count = 0;
+static int MUTATION_RATE = 2;		//chances of mutation in %
 
 int main()
 {
@@ -75,6 +79,8 @@ bunny* create_bunny(bunny* bunny_list)
 		new_bunny->next_bunny = NULL;
 	}
 	bunny_count++;
+	if(new_bunny->get_sex() == 1)
+	female_bunny_count++;
 	return bunny_list;
 }
 
@@ -83,7 +89,12 @@ void list_bunnies(bunny* bunny_list)
 	bunny* current_bunny=bunny_list;
 	while(current_bunny != NULL)
 	{
-		cout << "Bunny " << current_bunny->get_age() << " sex = " << current_bunny->get_sex() << endl;
+		cout << "Bunny " << current_bunny->get_name() 
+		<< " sex = " << current_bunny->get_sex()
+		<< " color: " << current_bunny->get_color() 
+		<< " age: " << current_bunny->get_age() 
+		<< " and is mutant: " << current_bunny->is_mutant() 
+		<< " girls number: " << female_bunny_count << endl;
 		current_bunny = current_bunny->next_bunny;
 	}
 }
@@ -101,20 +112,35 @@ void add_age(bunny* bunny_list)
 bunny::bunny()
 {
 	age = 0;
+	if(rand()%100 < MUTATION_RATE)
+	is_bunny_mutant = true;
+	else
+	is_bunny_mutant = false;
 	sex = rand()%2;
+	color = colors[rand()%colors.size()];
+	name = boys_names[rand()%boys_names.size()];
 }
-
 int bunny::get_age()
 {
 	return age;
 }
-
 void bunny::grow_bunny()
 {
 	age++;
 }
-
 bool bunny::get_sex()
 {
 	return sex;
+}
+string bunny::get_color()
+{
+	return color;
+}
+string bunny::get_name()
+{
+	return name;
+}
+bool bunny::is_mutant()
+{
+	return is_bunny_mutant;
 }
