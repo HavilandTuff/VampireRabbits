@@ -30,6 +30,7 @@ private:
 bunny*create_bunny(bunny* bunny_list);
 void list_bunnies(bunny* bunny_list);
 void add_age(bunny* bunny_list);
+void kill_bunny(bunny* bunny_list);
 
 /***********************************Global variables*******************/
 static int MAX_BUNNY_COUNT = 1000;
@@ -53,6 +54,7 @@ int main()
 		cout << "Bunnies aged: " << endl;
 		list_bunnies(bunnies_list);
 		cout << "Bunny count: " << bunny_count << endl;
+		kill_bunny(bunnies_list);
 		cout << "\nTo finish press 'q' or any key to continue" << endl;
 		cin >> quit;
 		cin.clear();
@@ -108,6 +110,27 @@ void add_age(bunny* bunny_list)
 		current_bunny = current_bunny->next_bunny;
 	}
 }
+void kill_bunny(bunny* bunny_list)
+{
+	bunny* previous = NULL;
+	bunny* current = bunny_list;
+	int count = 0;
+	while(current != NULL)
+	{
+		if(count == 3)
+		{
+			previous->next_bunny = current->next_bunny;
+			delete current;
+			current = previous;
+			bunny_count--;
+		}
+		previous = current;
+		current = current->next_bunny;
+		count++;
+	}
+}
+	
+		
 /****************************class methods*********************************************************/
 bunny::bunny()
 {
