@@ -3,6 +3,7 @@
 #ifndef names_hpp
 #define names_hpp
 using namespace std;
+enum SEX {male, female};
 static vector<string> boys_names = {
 "Noah",
 "Liam",
