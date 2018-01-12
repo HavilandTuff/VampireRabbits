@@ -4,7 +4,7 @@
 #define names_hpp
 using namespace std;
 enum SEX {male, female};
-static vector<string> boys_names = {
+vector<string> boys_names = {
 "Noah",
 "Liam",
 "Mason",
@@ -50,14 +50,14 @@ static vector<string> boys_names = {
 "Christian",
 "Jaxon",
 "Julian",
-"Landon",/*
-Grayson
-Jonathan
-Isaiah
-Charles
-Thomas
-Aaron
-Eli
+"Landon",
+"Grayson",
+"Jonathan",
+"Isaiah",
+"Charles",
+"Thomas",
+"Aaron",
+"Eli",/*
 Connor
 Jeremiah
 Cameron
@@ -104,33 +104,33 @@ Blake
 Nathaniel
 */
 };
-static vector<string> girls_names = {/*
-Emma
-Olivia
-Sophia
-Ava
-Isabella
-Mia
-Abigail
-Emily
-Charlotte
-Harper
-Madison
-Amelia
-Elizabeth
-Sofia
-Evelyn
-Avery
-Chloe
-Ella
-Grace
-Victoria
-Aubrey
-Scarlett
-Zoey
-Addison
-Lily
-Lillian
+vector<string> girls_names = {
+"Emma",
+"Olivia",
+"Sophia",
+"Ava",
+"Isabella",
+"Mia",
+"Abigail",
+"Emily",
+"Charlotte",
+"Harper",
+"Madison",
+"Amelia",
+"Elizabeth",
+"Sofia",
+"Evelyn",
+"Avery",
+"Chloe",
+"Ella",
+"Grace",
+"Victoria",
+"Aubrey",
+"Scarlett",
+"Zoey",
+"Addison",
+"Lily",
+"Lillian",/*
 Natalie
 Hannah
 Aria
@@ -202,5 +202,18 @@ Isabelle
 Vivian
 Gianna*/
 };
-static vector<string> colors = { "Brown", "White", "Black", "Spotted" };
+vector<string> colors = { "Brown", "White", "Black", "Spotted" };
+vector<string> mutants_names = { 
+	"Darth Vader",
+	"Dracula",
+	"Igor",
+	"Brutus",
+	"Sammael",
+	"Lucyfer",
+	"Rasputin",
+	"Boruta",
+	"Azazel",
+	"Lilith",
+};
+
 #endif

@@ -18,9 +18,10 @@ public:
 	bool is_mutant();
 	int get_age();
 	void grow_bunny();
+	void mutate();
 	bunny* next_bunny;
 private:
-	const int MUTATION_RATE = 2;		//chances of mutation in %
+	static const int MUTATION_RATE = 2;			//chances of mutation in %
 	bool is_bunny_mutant;
 	string color;
 	int age;
@@ -33,19 +34,21 @@ void list_bunnies(bunny* bunny_list);
 void add_age(bunny* &bunny_list);
 void kill_bunny(bunny* &bunny_list, bunny* &previous, bunny* &current);
 void breed_bunnies(bunny* bunny_list);
+void cull_bunnies(bunny* &bunny_list);
 
 /***********************************Global variables*******************/
 const int MAX_BUNNY_COUNT = 1000;
-int bunny_count = 0;
-int female_bunny_count = 0;
+const int MAX_BUNNY_AGE = 10;
+const int MAX_MUTANT_AGE = 50;
 int mutants_count = 0;
 
 /************************************MAIN******************************/
 int main()
 {
-	srand(time(nullptr));
+	srand(time(NULL));
 	bunny* bunnies_list = nullptr;
 	char quit = ' ';
+	int turn_counter = 0;
 	for(int i = 0; i<5; i++)
 	{
 	bunnies_list = create_bunny(bunnies_list);
@@ -53,9 +56,12 @@ int main()
 	list_bunnies(bunnies_list);
 	while( quit != 'q' && quit != 'Q' )
 	{
+		turn_counter++;
+		cout << "Turn " << turn_counter << endl;
 		add_age(bunnies_list);
 		breed_bunnies(bunnies_list);
 		list_bunnies(bunnies_list);
+		cull_bunnies(bunnies_list);
 		cout << "\nTo finish press 'q' or any key to continue" << endl;
 		cin >> quit;
 		cin.clear();
@@ -81,27 +87,30 @@ bunny* create_bunny(bunny* bunny_list)
 		temp->next_bunny = new_bunny;
 		new_bunny->next_bunny = nullptr;
 	}
-	bunny_count++;
-	if(new_bunny->get_sex() == 1)
-	female_bunny_count++;
 	return bunny_list;
 }
 
 void list_bunnies(bunny* bunny_list)
 {
+	int bunny_count = 0;
+	int female_bunny_count = 0;
 	bunny* current_bunny=bunny_list;
 	while(current_bunny != nullptr)
 	{
 		cout << "Bunny " << current_bunny->get_name() 
-		<< " sex = " << current_bunny->get_sex()
 		<< " color: " << current_bunny->get_color() 
 		<< " age: " << current_bunny->get_age() 
 		<< " and is mutant: " << current_bunny->is_mutant() << endl;
+		bunny_count++;
+		if(current_bunny->get_sex() == 1)
+		female_bunny_count++;
 		current_bunny = current_bunny->next_bunny;
+		
 	}
 	cout << "Bunny count: " << bunny_count
 		 << " and females is: " << female_bunny_count 
 		 << " number of mutants: " << mutants_count << endl;
+	
 }
 
 void add_age(bunny* &bunny_list)
@@ -110,7 +119,8 @@ void add_age(bunny* &bunny_list)
 	bunny* current_bunny=bunny_list;
 	while(current_bunny != nullptr)
 	{
-		if (current_bunny->get_age() < 10)
+		if (current_bunny->get_age() < MAX_BUNNY_AGE || 
+		(current_bunny->is_mutant() == true && current_bunny->get_age() < MAX_MUTANT_AGE))
 		{
 			current_bunny->grow_bunny();
 			previous = current_bunny;
@@ -125,48 +135,80 @@ void kill_bunny(bunny* &bunny_list, bunny* &previous, bunny* &current)
 {
 		if ( previous == nullptr)
 		{
+			cout << "Bunny " << current->get_name() << " died!" << endl;
 			bunny_list = current->next_bunny;
 			delete current;
 			current = bunny_list;
-			bunny_count--;
 		}
 		else
 		{
+			cout << "Bunny " << current->get_name() << " died!" << endl;
 			previous->next_bunny = current->next_bunny;
 			delete current;
 			current = previous->next_bunny;
-			bunny_count--;
 		}
 }
 
 void breed_bunnies(bunny* bunny_list)
 {
+	
+	int grown_female_bunny_count = 0;
 	int grown_bunny = 0;
 	bunny* temp = bunny_list;
 	while (temp != nullptr)
 	{
-		if(temp->get_age() >=2 && temp->get_sex() == true)
+		if(temp->get_age() >=2)
 		grown_bunny++;
+		if(temp->get_sex() == 1 && temp->is_mutant() == false && temp->get_age() >=2)
+		grown_female_bunny_count++;
 		temp = temp->next_bunny;
 	}
-	 if(female_bunny_count !=0 && bunny_count != female_bunny_count && grown_bunny > 0)
+	 if(grown_bunny > 0 && grown_female_bunny_count !=0 && grown_bunny != grown_female_bunny_count )
 	 {
-		 for( int i=0; i<grown_bunny; i++)
+		 for( int i=0; i<grown_female_bunny_count; i++)
 		 {
 			 create_bunny(bunny_list);
 		 }
 	 }
-	 else if(female_bunny_count == 0)
+	 else if(grown_female_bunny_count == 0)
 	 {
 		 cout << "No girls! Cannot breed!" << endl;
 	 }
 	 else if( grown_bunny == 0)
 	 {
-		 cout << "No adoult bunnies! Cannot breed!" << endl;
+		 cout << "No adult bunnies! Cannot breed!" << endl;
 	 }
 	 else
 	 cout << "No boys! Cannot breed!" << endl;
 }		
+
+void cull_bunnies(bunny* &bunny_list)
+{
+	bunny* previous = nullptr;
+	bunny* current_bunny=bunny_list;
+	int bunny_count = 0;
+	while(current_bunny != nullptr)\
+	{
+		current_bunny = current_bunny->next_bunny;
+		bunny_count++;
+	}
+	previous = nullptr;
+	current_bunny = bunny_list;
+	if(bunny_count > MAX_BUNNY_COUNT)
+	{
+		while(current_bunny != nullptr)
+		{
+			if(rand()%2)
+			kill_bunny(bunny_list, previous, current_bunny);
+			else
+			{
+				previous = current_bunny;
+				current_bunny = current_bunny->next_bunny;
+			}
+		}
+	}
+}
+		
 /****************************class methods*********************************************************/
 bunny::bunny()
 {
@@ -174,13 +216,17 @@ bunny::bunny()
 	if(rand()%100 < MUTATION_RATE)
 	{
 		is_bunny_mutant = true;
+		name = mutants_names[rand()%mutants_names.size()];
 		mutants_count++;
 	}	
 	else
 	is_bunny_mutant = false;
 	sex = rand()%2;
 	color = colors[rand()%colors.size()];
+	if(sex == 0)
 	name = boys_names[rand()%boys_names.size()];
+	else
+	name = girls_names[rand()%girls_names.size()];
 }
 int bunny::get_age()
 {
@@ -205,4 +251,10 @@ string bunny::get_name()
 bool bunny::is_mutant()
 {
 	return is_bunny_mutant;
+}
+void bunny::mutate()
+{
+	is_bunny_mutant=true;
+	name = mutants_names[rand()%mutants_names.size()];
+	//sex = false;
 }
