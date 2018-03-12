@@ -36,10 +36,11 @@ void kill_bunny(bunny* &bunny_list, bunny* &previous, bunny* &current);
 void breed_bunnies(bunny* bunny_list);
 void cull_bunnies(bunny* &bunny_list);
 
-/***********************************Global variables*******************/
+/******************************Global variables************************/
 const int MAX_BUNNY_COUNT = 1000;
 const int MAX_BUNNY_AGE = 10;
 const int MAX_MUTANT_AGE = 50;
+int BUNNY_COUNT = 0;
 int mutants_count = 0;
 
 /************************************MAIN******************************/
@@ -60,8 +61,12 @@ int main()
 		cout << "Turn " << turn_counter << endl;
 		add_age(bunnies_list);
 		breed_bunnies(bunnies_list);
+		if(BUNNY_COUNT >= MAX_BUNNY_COUNT)
+		{
+			cout << "\n**** May The Hunger Games begin! ****\n" << endl;
+			cull_bunnies(bunnies_list);
+		}
 		list_bunnies(bunnies_list);
-		cull_bunnies(bunnies_list);
 		cout << "\nTo finish press 'q' or any key to continue" << endl;
 		cin >> quit;
 		cin.clear();
@@ -87,6 +92,8 @@ bunny* create_bunny(bunny* bunny_list)
 		temp->next_bunny = new_bunny;
 		new_bunny->next_bunny = nullptr;
 	}
+	BUNNY_COUNT++;
+	cout << new_bunny->get_name() << " was born!" << endl;
 	return bunny_list;
 }
 
@@ -147,6 +154,7 @@ void kill_bunny(bunny* &bunny_list, bunny* &previous, bunny* &current)
 			delete current;
 			current = previous->next_bunny;
 		}
+		BUNNY_COUNT--;
 }
 
 void breed_bunnies(bunny* bunny_list)
@@ -163,9 +171,9 @@ void breed_bunnies(bunny* bunny_list)
 		grown_female_bunny_count++;
 		temp = temp->next_bunny;
 	}
-	 if(grown_bunny > 0 && grown_female_bunny_count !=0 && grown_bunny != grown_female_bunny_count )
+	 if(grown_bunny > 0 && grown_female_bunny_count !=0 && grown_bunny != grown_female_bunny_count)
 	 {
-		 for( int i=0; i<grown_female_bunny_count; i++)
+		 for( int i=0; i<grown_female_bunny_count && BUNNY_COUNT < MAX_BUNNY_COUNT; i++)
 		 {
 			 create_bunny(bunny_list);
 		 }
@@ -184,17 +192,9 @@ void breed_bunnies(bunny* bunny_list)
 
 void cull_bunnies(bunny* &bunny_list)
 {
+	
 	bunny* previous = nullptr;
 	bunny* current_bunny=bunny_list;
-	int bunny_count = 0;
-	while(current_bunny != nullptr)\
-	{
-		current_bunny = current_bunny->next_bunny;
-		bunny_count++;
-	}
-	previous = nullptr;
-	current_bunny = bunny_list;
-	if(bunny_count > MAX_BUNNY_COUNT)
 	{
 		while(current_bunny != nullptr)
 		{
@@ -256,5 +256,4 @@ void bunny::mutate()
 {
 	is_bunny_mutant=true;
 	name = mutants_names[rand()%mutants_names.size()];
-	//sex = false;
 }
