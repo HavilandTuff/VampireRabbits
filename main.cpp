@@ -28,7 +28,19 @@ private:
 	string name;
 	bool sex;						// 0 - boy, 1 - girl
 };
-
+class bunny_herd
+{
+public:
+	int bunny_count();
+	int mutants_count();
+	void list_bunnies();
+	void live_bunnies();
+private:
+	const int MAX_BUNNY_COUNT = 1000;
+	const int MAX_BUNNY_AGE = 10;
+	const int MAX_MUTANT_AGE = 50;
+	bunny* bunnies_list = nullptr;
+};
 bunny*create_bunny(bunny* bunny_list);
 void list_bunnies(bunny* bunny_list);
 void add_age(bunny* &bunny_list);
