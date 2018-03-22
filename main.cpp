@@ -5,7 +5,6 @@
 #include <ctime>
 #include <cstdlib>
 #include <vector>
-#include "names.hpp"
 #include "bunny.hpp"
 using namespace std;
 /*
@@ -30,6 +29,7 @@ private:
 	bool sex;						// 0 - boy, 1 - girl
 };
 */
+/*
 class bunny_herd
 {
 public:
@@ -48,6 +48,7 @@ private:
 	void breed_bunnies(bunny* bunny_list);
 	void cull_bunnies(bunny* &bunny_list);
 };
+*/
 bunny*create_bunny(bunny* bunny_list);
 void list_bunnies(bunny* bunny_list);
 void add_age(bunny* &bunny_list);
@@ -56,11 +57,7 @@ void breed_bunnies(bunny* bunny_list);
 void cull_bunnies(bunny* &bunny_list);
 
 /******************************Global variables************************/
-const int MAX_BUNNY_COUNT = 1000;
-const int MAX_BUNNY_AGE = 10;
-const int MAX_MUTANT_AGE = 50;
-int BUNNY_COUNT = 0;
-int mutants_count = 0;
+
 
 /************************************MAIN******************************/
 int main()

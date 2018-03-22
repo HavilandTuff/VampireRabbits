@@ -4,6 +4,7 @@
 #define names_hpp
 using namespace std;
 enum SEX {male, female};
+enum BUNNY_COLOR{ BROWN, WHITE, BLACK, SPOTTED };
 vector<string> boys_names = {
 "Noah",
 "Liam",

@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-
+#include "names.hpp"
 #include "bunny.hpp"
 /*
 #include "bunny.h"
@@ -19,6 +19,8 @@ void bunny::set_age(int change_age)
 }
 
 */
+
+/**************************Class methods********************************/
 bunny::bunny()
 {
 	age = 0;

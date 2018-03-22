@@ -1,11 +1,17 @@
-
+//bunny.hpp
 
 #ifndef bunny_hpp
 #define bunny_hpp
 #include <string>
-#include "bunny.cpp"
+//#include "bunny.cpp"
 using namespace std;
-enum BUNNY_COLOR{ BROWN, WHITE, BLACK, SPOTTED };
+/***************************Global variables****************************/
+const int MAX_BUNNY_COUNT = 1000;
+const int MAX_BUNNY_AGE = 10;
+const int MAX_MUTANT_AGE = 50;
+int BUNNY_COUNT = 0;
+int mutants_count = 0;
+/***************************Class definition***************************/
 class bunny
 {
 public:
