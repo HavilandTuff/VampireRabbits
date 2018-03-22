@@ -6,8 +6,9 @@
 #include <cstdlib>
 #include <vector>
 #include "names.hpp"
+#include "bunny.hpp"
 using namespace std;
-
+/*
 class bunny
 {
 public:
@@ -28,6 +29,7 @@ private:
 	string name;
 	bool sex;						// 0 - boy, 1 - girl
 };
+*/
 class bunny_herd
 {
 public:
@@ -227,6 +229,7 @@ void cull_bunnies(bunny* &bunny_list)
 }
 		
 /****************************class methods*********************************************************/
+/*
 bunny::bunny()
 {
 	age = 0;
@@ -274,3 +277,4 @@ void bunny::mutate()
 	is_bunny_mutant=true;
 	name = mutants_names[rand()%mutants_names.size()];
 }
+*/
