@@ -57,7 +57,8 @@ void breed_bunnies(bunny* bunny_list);
 void cull_bunnies(bunny* &bunny_list);
 
 /******************************Global variables************************/
-
+int BUNNY_COUNT = 0;
+int mutants_count = 0;
 
 /************************************MAIN******************************/
 int main()

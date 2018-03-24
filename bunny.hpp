@@ -9,8 +9,7 @@ using namespace std;
 const int MAX_BUNNY_COUNT = 1000;
 const int MAX_BUNNY_AGE = 10;
 const int MAX_MUTANT_AGE = 50;
-int BUNNY_COUNT = 0;
-int mutants_count = 0;
+
 /***************************Class definition***************************/
 class bunny
 {
