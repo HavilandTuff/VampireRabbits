@@ -6,49 +6,9 @@
 #include <cstdlib>
 #include <vector>
 #include "bunny.hpp"
+/#include "herd.hpp"
 using namespace std;
-/*
-class bunny
-{
-public:
-	bunny();
-	bool get_sex();
-	string get_color();
-	string get_name();
-	bool is_mutant();
-	int get_age();
-	void grow_bunny();
-	void mutate();
-	bunny* next_bunny;
-private:
-	static const int MUTATION_RATE = 2;			//chances of mutation in %
-	bool is_bunny_mutant;
-	string color;
-	int age;
-	string name;
-	bool sex;						// 0 - boy, 1 - girl
-};
-*/
-/*
-class bunny_herd
-{
-public:
-	bunny_herd();
-	int bunny_count();
-	int mutants_count();
-	void list_bunnies();
-	void live_bunnies();
-private:
-	const int MAX_BUNNY_COUNT = 1000;
-	const int MAX_BUNNY_AGE = 10;
-	const int MAX_MUTANT_AGE = 50;
-	bunny* bunnies_list = nullptr;
-	void add_age(bunny* &bunny_list);
-	void kill_bunny(bunny* &bunny_list, bunny* &previous, bunny* &current);
-	void breed_bunnies(bunny* bunny_list);
-	void cull_bunnies(bunny* &bunny_list);
-};
-*/
+
 bunny*create_bunny(bunny* bunny_list);
 void list_bunnies(bunny* bunny_list);
 void add_age(bunny* &bunny_list);
@@ -227,52 +187,3 @@ void cull_bunnies(bunny* &bunny_list)
 }
 		
 /****************************class methods*********************************************************/
-/*
-bunny::bunny()
-{
-	age = 0;
-	if(rand()%100 < MUTATION_RATE)
-	{
-		is_bunny_mutant = true;
-		name = mutants_names[rand()%mutants_names.size()];
-		mutants_count++;
-	}	
-	else
-	is_bunny_mutant = false;
-	sex = rand()%2;
-	color = colors[rand()%colors.size()];
-	if(sex == 0)
-	name = boys_names[rand()%boys_names.size()];
-	else
-	name = girls_names[rand()%girls_names.size()];
-}
-int bunny::get_age()
-{
-	return age;
-}
-void bunny::grow_bunny()
-{
-	age++;
-}
-bool bunny::get_sex()
-{
-	return sex;
-}
-string bunny::get_color()
-{
-	return color;
-}
-string bunny::get_name()
-{
-	return name;
-}
-bool bunny::is_mutant()
-{
-	return is_bunny_mutant;
-}
-void bunny::mutate()
-{
-	is_bunny_mutant=true;
-	name = mutants_names[rand()%mutants_names.size()];
-}
-*/
