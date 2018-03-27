@@ -6,7 +6,11 @@
 #include <cstdlib>
 #include <vector>
 #include "bunny.hpp"
+<<<<<<< HEAD
 #include "bunny_herd.hpp"
+=======
+/#include "herd.hpp"
+>>>>>>> 7db285f4a6a4e9847141fc1b2264e77116351fec
 using namespace std;
 
 bunny*create_bunny(bunny* bunny_list);
@@ -83,6 +87,7 @@ bunny* create_bunny(bunny* bunny_list)
 
 void list_bunnies(bunny* bunny_list)
 {
+	
 	int bunny_count = 0;
 	int female_bunny_count = 0;
 	bunny* current_bunny=bunny_list;
@@ -194,4 +199,7 @@ void cull_bunnies(bunny* &bunny_list)
 }
 		
 /****************************class methods*********************************************************/
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7db285f4a6a4e9847141fc1b2264e77116351fec

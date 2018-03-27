@@ -83,6 +83,7 @@ bunny* create_bunny(bunny* bunny_list)
 
 void list_bunnies(bunny* bunny_list)
 {
+	
 	int bunny_count = 0;
 	int female_bunny_count = 0;
 	bunny* current_bunny=bunny_list;

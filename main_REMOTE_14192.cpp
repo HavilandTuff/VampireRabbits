@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <vector>
 #include "bunny.hpp"
-#include "bunny_herd.hpp"
+/#include "herd.hpp"
 using namespace std;
 
 bunny*create_bunny(bunny* bunny_list);
@@ -23,13 +23,6 @@ int mutants_count = 0;
 /************************************MAIN******************************/
 int main()
 {
-	bunny_herd test_herd;
-	for(int i=0; i<5; i++)
-	{
-		test_herd.add_bunny();
-	}
-	cout << "TEstowe stado ma: " << test_herd.bunny_count() << " królików." << endl;
-	cout << "Testowe stado ma: " << test_herd.mutants_count() << " mutantów." << endl;
 	srand(time(NULL));
 	bunny* bunnies_list = nullptr;
 	char quit = ' ';
@@ -194,4 +187,3 @@ void cull_bunnies(bunny* &bunny_list)
 }
 		
 /****************************class methods*********************************************************/
-
