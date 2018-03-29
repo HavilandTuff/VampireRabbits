@@ -23,11 +23,23 @@ int mutants_count = 0;
 /************************************MAIN******************************/
 int main()
 {
+	srand(time(NULL));
+	char quit = ' ';
+	int turn_counter = 0;
 	bunny_herd test_herd;
 	for(int i=0; i<5; i++)
 	{
 		test_herd.add_bunny();
 	}
+	while( quit != 'q' && quit != 'Q' )
+	{
+		test_herd.live_bunnies();
+		cout << "\nTo finish press 'q' or any key to continue" << endl;
+		cin >> quit;
+		cin.clear();
+		cin.ignore( 1000, '\n' );
+	}
+	/*
 	cout << "TEstowe stado ma: " << test_herd.bunny_count() << " królików." << endl;
 	cout << "Testowe stado ma: " << test_herd.mutants_count() << " mutantów." << endl;
 	srand(time(NULL));
@@ -56,6 +68,7 @@ int main()
 		cin.clear();
 		cin.ignore( 1000, '\n' );
 	}
+	*/
 	return 0;
 }
 /******************************************functions*******************/

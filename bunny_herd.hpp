@@ -20,9 +20,10 @@ private:
 	const int MAX_MUTANT_AGE = 50;
 	bunny* bunnies_list;
 	void add_age();
-	void kill_bunny();
+	void kill_bunny(bunny* previous, bunny* current );
 	void breed_bunnies();
 	void cull_bunnies();
+	void mutate_bunnies();
 	
 };
 #endif
