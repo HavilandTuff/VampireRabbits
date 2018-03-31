@@ -5,6 +5,7 @@
 
 
 /**************************Class methods********************************/
+int bunny::MUTATION_RATE=2;
 bunny::bunny()
 {
 	age = 0;
@@ -16,12 +17,15 @@ bunny::bunny()
 	}	
 	else
 	is_bunny_mutant = false;
-	sex = rand()%2;
 	color = colors[rand()%colors.size()];
+	if(is_bunny_mutant==false)
+	{
+	sex = rand()%2;
 	if(sex == 0)
 	name = boys_names[rand()%boys_names.size()];
 	else
 	name = girls_names[rand()%girls_names.size()];
+	}
 }
 int bunny::get_age()
 {

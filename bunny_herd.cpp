@@ -59,7 +59,11 @@ void bunny_herd::list_bunnies()
 	while(current_bunny != nullptr)
 	{
 		cout << "Bunny: " << current_bunny->get_name() 
-		<< ", age: " << current_bunny->get_age() << endl;
+		<< ", age: " << current_bunny->get_age() << " sex is: " << current_bunny->get_sex();
+		if(current_bunny->is_mutant() == true)
+		cout << ", is vampire mutant!" << endl;
+		else
+		cout << endl;
 		current_bunny=current_bunny->next_bunny;
 	}
 }
@@ -77,6 +81,7 @@ void bunny_herd::live_bunnies()
 	}
 	cout << "List of Bunnies" << endl;
 	list_bunnies();
+	cout << "Number of bunnies: " << bunny_count() << endl;
 }
 
 void bunny_herd::add_bunny()
@@ -99,7 +104,7 @@ void bunny_herd::add_bunny()
 	cout << new_bunny->get_name() << " was born!" << endl;
 }
 
-void bunny_herd::kill_bunny(bunny* previous, bunny* current )
+void bunny_herd::kill_bunny(bunny* &previous, bunny* &current)
 {
 	
 	
@@ -162,13 +167,16 @@ void bunny_herd::breed_bunnies()
 	bunny* temp = bunnies_list;
 	while (temp != nullptr)
 	{
-		if(temp->get_age() >=2)
+		if(temp->get_age() >=2 && temp->is_mutant() == false)
 		grown_bunny++;
 		if(temp->get_sex() == 1 && temp->is_mutant() == false && temp->get_age() >=2)
 		grown_female_bunny_count++;
 		temp = temp->next_bunny;
 	}
-	 if(grown_bunny > 0 && grown_female_bunny_count !=0 && grown_bunny != grown_female_bunny_count)
+	//test
+	cout << "Number of grown bunnies: " << grown_bunny << endl;
+	cout << "Number of females: " << grown_female_bunny_count << endl;
+	 if(grown_female_bunny_count !=0 && grown_bunny != grown_female_bunny_count)
 	 {
 		 for( int i=0; i<grown_female_bunny_count && bunny_count() < MAX_BUNNY_COUNT; i++)
 		 {
@@ -185,4 +193,29 @@ void bunny_herd::breed_bunnies()
 	 }
 	 else
 	 cout << "No boys! Cannot breed!" << endl;
+}
+void bunny_herd::mutate_bunnies()
+{
+	bunny* temp=bunnies_list;
+	int bunnies=bunny_count();
+	int mutations=mutants_count();
+	bool mutated=false;
+	int be_mutant=0;
+	while(mutations != 0)
+	{
+		while(mutated==false)
+		{
+			be_mutant=rand()%bunnies;
+			for(int i=0; i < be_mutant; i++)
+			{
+				temp=temp->next_bunny;
+			}
+			if(temp->is_mutant() == false)
+			{
+				temp->mutate();
+				mutated=true;
+			}
+		}
+		mutations--;
+	}
 }

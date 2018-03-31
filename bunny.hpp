@@ -24,7 +24,7 @@ public:
 	void mutate();
 	bunny* next_bunny;
 private:
-	static const int MUTATION_RATE = 2;			//chances of mutation in %
+	static int MUTATION_RATE;			//chances of mutation in %
 	bool is_bunny_mutant;
 	string color;
 	int age;
