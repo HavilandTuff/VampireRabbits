@@ -1,5 +1,6 @@
 //bunny_herd.cpp
 #include "bunny_herd.hpp"
+using namespace std;
 /*
 class bunny_herd
 {
@@ -79,6 +80,8 @@ void bunny_herd::live_bunnies()
 		cout << "\n**** May The Hunger Games begin! ****\n" << endl;
 		cull_bunnies();
 	}
+	cout << "Radioactive vampire mutant bunnies go hunting!" << endl;
+	mutate_bunnies();
 	cout << "List of Bunnies" << endl;
 	list_bunnies();
 	cout << "Number of bunnies: " << bunny_count() << endl;
@@ -174,8 +177,8 @@ void bunny_herd::breed_bunnies()
 		temp = temp->next_bunny;
 	}
 	//test
-	cout << "Number of grown bunnies: " << grown_bunny << endl;
-	cout << "Number of females: " << grown_female_bunny_count << endl;
+	//cout << "Number of grown bunnies: " << grown_bunny << endl;
+	//cout << "Number of females: " << grown_female_bunny_count << endl;
 	 if(grown_female_bunny_count !=0 && grown_bunny != grown_female_bunny_count)
 	 {
 		 for( int i=0; i<grown_female_bunny_count && bunny_count() < MAX_BUNNY_COUNT; i++)
@@ -196,11 +199,14 @@ void bunny_herd::breed_bunnies()
 }
 void bunny_herd::mutate_bunnies()
 {
+	if(bunny_count() != mutants_count())
+	{
 	bunny* temp=bunnies_list;
 	int bunnies=bunny_count();
 	int mutations=mutants_count();
 	bool mutated=false;
 	int be_mutant=0;
+	
 	while(mutations != 0)
 	{
 		while(mutated==false)
@@ -212,10 +218,16 @@ void bunny_herd::mutate_bunnies()
 			}
 			if(temp->is_mutant() == false)
 			{
+				cout << "Bunny " << temp->get_name() << " has been bitten and now is vampire ";
 				temp->mutate();
+				cout << temp->get_name() << endl;
 				mutated=true;
+				
 			}
 		}
+		if(bunny_count()==mutants_count())
+		break;
 		mutations--;
 	}
-}
+	}
+}	
