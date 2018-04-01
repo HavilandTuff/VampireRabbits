@@ -1,6 +1,9 @@
 //herd class .hpp
 #ifndef herd_hpp
 #define herd_hpp
+#include <iostream>
+#include <string>
+using namespace std;
 class bunny_herd
 {
 public:
