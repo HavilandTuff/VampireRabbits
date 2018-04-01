@@ -2,7 +2,10 @@
 #include <iostream>
 #include "names.hpp"
 #include "bunny.hpp"
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4959b540f33e86bd88887aaa73413af649753c41
 
 /**************************Class methods********************************/
 int bunny::MUTATION_RATE=2;
@@ -13,7 +16,6 @@ bunny::bunny()
 	{
 		is_bunny_mutant = true;
 		name = mutants_names[rand()%mutants_names.size()];
-		//mutants_count++;
 	}	
 	else
 	is_bunny_mutant = false;
@@ -21,7 +23,6 @@ bunny::bunny()
 	if(is_bunny_mutant==false)
 	{
 	sex = rand()%2;
-	color = colors[rand()%colors.size()];
 	if(sex == 0)
 	name = boys_names[rand()%boys_names.size()];
 	else
