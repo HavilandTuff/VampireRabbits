@@ -13,7 +13,6 @@ bunny::bunny()
 	{
 		is_bunny_mutant = true;
 		name = mutants_names[rand()%mutants_names.size()];
-		//mutants_count++;
 	}	
 	else
 	is_bunny_mutant = false;

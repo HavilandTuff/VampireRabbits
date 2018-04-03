@@ -20,7 +20,7 @@ int main()
 	{
 		test_herd.add_bunny();
 	}
-	while( quit != 'q' && quit != 'Q' )
+	while( quit != 'q' && quit != 'Q')
 	{
 		cout << "Turn: " << turn_counter << endl;
 		test_herd.live_bunnies();
@@ -29,6 +29,11 @@ int main()
 		cin >> quit;
 		cin.clear();
 		cin.ignore( 1000, '\n' );
+		if(test_herd.bunny_count()==test_herd.mutants_count()&& test_herd.bunny_count() == 0)
+		{
+			quit='q';
+			cout << "All bunnies perished. End of game!" << endl;
+		}
 	}
 	return 0;
 }

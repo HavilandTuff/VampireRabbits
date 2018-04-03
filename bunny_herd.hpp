@@ -15,12 +15,27 @@ public:
 	void add_bunny(); 
 	void get_MAX_BUNNY_COUNT();
 private:
+	enum Messages 
+	{
+		BORN,
+		DIE,
+		HUNT_BEGIN,
+		HUNT_SUCESS,
+		HUNT_FAILUR,
+		BUNNY_STATUS,
+		GROW,
+		NO_GRN_BUNNY,
+		NO_F_BUNNY,
+		NO_M_BUNNY,
+		CULL,
+	};
 	bunny* bunnies_list;
 	void add_age();
 	void kill_bunny(bunny* &previous, bunny* &current );
 	void breed_bunnies();
 	void cull_bunnies();
 	void mutate_bunnies();
+	void message(Messages event, bunny* current);
 	
 };
 #endif

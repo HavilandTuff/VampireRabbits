@@ -10,16 +10,16 @@ public:
 	int mutants_count();
 	void list_bunnies();
 	void live_bunnies();
+	void add_bunny(); 
+	void get_MAX_BUNNY_COUNT();
 private:
-	const int MAX_BUNNY_COUNT = 1000;
-	const int MAX_BUNNY_AGE = 10;
-	const int MAX_MUTANT_AGE = 50;
 	bunny* bunnies_list;
-	void add_age(bunny* &bunny_list);
-	void kill_bunny(bunny* &bunny_list, bunny* &previous, bunny* &current);
-	void breed_bunnies(bunny* bunny_list);
-	void cull_bunnies(bunny* &bunny_list);
-	void add_bunny(bunny* bunny_list) //adds single random bunny.
+	void add_age();
+	void kill_bunny(bunny* &previous, bunny* &current );
+	void breed_bunnies();
+	void cull_bunnies();
+	void mutate_bunnies();
+	
 };
 */
 
@@ -59,28 +59,23 @@ void bunny_herd::list_bunnies()
 	bunny* current_bunny=bunnies_list;
 	while(current_bunny != nullptr)
 	{
-		cout << "Bunny: " << current_bunny->get_name() 
-		<< ", age: " << current_bunny->get_age() << " sex is: " << current_bunny->get_sex();
-		if(current_bunny->is_mutant() == true)
-		cout << ", is vampire mutant!" << endl;
-		else
-		cout << endl;
+		message(BUNNY_STATUS, current_bunny);
 		current_bunny=current_bunny->next_bunny;
 	}
 }
 
 void bunny_herd::live_bunnies()
 {
-	cout << "Bunnies grow. " << endl;
+	message(GROW, nullptr);
 	add_age();
 	cout << "Bunnies breed. " << endl;
 	breed_bunnies();
 	if(bunny_count() >= MAX_BUNNY_COUNT)
 	{
-		cout << "\n**** May The Hunger Games begin! ****\n" << endl;
+		message(CULL, nullptr);
 		cull_bunnies();
 	}
-	cout << "Radioactive vampire mutant bunnies go hunting!" << endl;
+	message(HUNT_BEGIN, nullptr);
 	mutate_bunnies();
 	cout << "List of Bunnies" << endl;
 	list_bunnies();
@@ -104,7 +99,7 @@ void bunny_herd::add_bunny()
 		temp->next_bunny = new_bunny;
 		new_bunny->next_bunny = nullptr;
 	}
-	cout << new_bunny->get_name() << " was born!" << endl;
+	message(BORN, new_bunny);
 }
 
 void bunny_herd::kill_bunny(bunny* &previous, bunny* &current)
@@ -113,14 +108,14 @@ void bunny_herd::kill_bunny(bunny* &previous, bunny* &current)
 	
 	if ( previous == nullptr)
 		{
-			cout << "Bunny " << current->get_name() << " died!" << endl;
+			message(DIE, current);
 			bunnies_list = current->next_bunny;
 			delete current;
 			current = bunnies_list;
 		}
 	else
 		{
-			cout << "Bunny " << current->get_name() << " died!" << endl;
+			message(DIE, current);
 			previous->next_bunny = current->next_bunny;
 			delete current;
 			current = previous->next_bunny;
@@ -176,9 +171,7 @@ void bunny_herd::breed_bunnies()
 		grown_female_bunny_count++;
 		temp = temp->next_bunny;
 	}
-	//test
-	//cout << "Number of grown bunnies: " << grown_bunny << endl;
-	//cout << "Number of females: " << grown_female_bunny_count << endl;
+	
 	 if(grown_female_bunny_count !=0 && grown_bunny != grown_female_bunny_count)
 	 {
 		 for( int i=0; i<grown_female_bunny_count && bunny_count() < MAX_BUNNY_COUNT; i++)
@@ -188,14 +181,14 @@ void bunny_herd::breed_bunnies()
 	 }
 	else if( grown_bunny == 0)
 	 {
-		 cout << "No adult bunnies! Cannot breed!" << endl;
+		message(NO_GRN_BUNNY, nullptr);
 	 }
 	  else if(grown_female_bunny_count == 0)
 	 {
-		 cout << "No grown girls! Cannot breed!" << endl;
+		 message(NO_F_BUNNY, nullptr);
 	 }
 	 else
-	 cout << "No boys! Cannot breed!" << endl;
+		message(NO_M_BUNNY, nullptr);
 }
 void bunny_herd::mutate_bunnies()
 {
@@ -216,18 +209,92 @@ void bunny_herd::mutate_bunnies()
 			{
 				temp=temp->next_bunny;
 			}
-			if(temp->is_mutant() == false)
+			if(temp->is_mutant() == false && rand()%2==true) //Bunny has 50/50 chance to survive vampire atack.
 			{
-				cout << "Bunny " << temp->get_name() << " has been bitten and now is vampire ";
-				temp->mutate();
-				cout << temp->get_name() << endl;
+				message(HUNT_SUCESS, temp);
 				mutated=true;
-				
 			}
+			else
+			{
+				message(HUNT_FAILUR, temp);
+				mutated=true;
+			}
+			temp=bunnies_list;
 		}
 		if(bunny_count()==mutants_count())
 		break;
 		mutations--;
+		mutated=false;
+		
 	}
 	}
 }	
+void bunny_herd::message(Messages event, bunny* current)
+{
+	switch(event)
+	{
+		case BORN:
+		{
+			cout << current->get_name() << " was born!" << endl;
+			break;
+		}
+		case DIE:
+		{
+			cout << "Bunny " << current->get_name() << " died!" << endl;
+			break;
+		}
+		case HUNT_BEGIN:
+		{
+			cout << "Radioactive vampire mutant bunnies go hunting!" << endl;
+			break;
+		}
+		case HUNT_FAILUR:
+		{
+			cout << "Bunny " << current->get_name() << " survived vampire attack." << endl;
+			break;
+		}
+		case HUNT_SUCESS:
+		{
+			cout << "Bunny " << current->get_name() << " has been bitten and now is vampire ";
+			current->mutate();
+			cout << current->get_name() << endl;
+			break;
+		}
+		case NO_GRN_BUNNY:
+		{
+			 cout << "No adult bunnies! Cannot breed!" << endl;
+			 break;
+		}
+		case NO_F_BUNNY:
+		{
+			cout << "No grown girls! Cannot breed!" << endl;
+			break;
+		}
+		case NO_M_BUNNY:
+		{
+			cout << "No boys! Cannot breed!" << endl;
+			break;
+		}
+		case BUNNY_STATUS:
+		{
+			cout << "Bunny: " << current->get_name() 
+			<< ", age: " << current->get_age() 
+			<< " sex is: " << current->get_sex();
+			if(current->is_mutant() == true)
+			cout << ", is vampire mutant!" << endl;
+			else
+			cout << endl;
+			break;
+		}
+		case CULL:
+		{
+			cout << "\n**** May The Hunger Games begin! ****\n" << endl;
+			break;
+		}
+		case GROW:
+		{
+			cout << "Bunnies grow. " << endl;
+			break;
+		}
+	}
+}
