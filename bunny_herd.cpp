@@ -13,12 +13,30 @@ public:
 	void add_bunny(); 
 	void get_MAX_BUNNY_COUNT();
 private:
+	enum Messages 
+	{
+		BORN,
+		DIE,
+		HUNT_BEGIN,
+		HUNT_SUCESS,
+		HUNT_FAILUR,
+		BUNNY_STATUS,
+		GROW,
+		NO_GRN_BUNNY,
+		NO_F_BUNNY,
+		NO_M_BUNNY,
+		CULL,
+		BREED,
+		LIST,
+		No_OF_BUNNIES,
+	};
 	bunny* bunnies_list;
 	void add_age();
 	void kill_bunny(bunny* &previous, bunny* &current );
 	void breed_bunnies();
 	void cull_bunnies();
 	void mutate_bunnies();
+	void message(Messages event, bunny* current);
 	
 };
 */
@@ -68,7 +86,7 @@ void bunny_herd::live_bunnies()
 {
 	message(GROW, nullptr);
 	add_age();
-	cout << "Bunnies breed. " << endl;
+	message(BREED, nullptr);
 	breed_bunnies();
 	if(bunny_count() >= MAX_BUNNY_COUNT)
 	{
@@ -77,9 +95,9 @@ void bunny_herd::live_bunnies()
 	}
 	message(HUNT_BEGIN, nullptr);
 	mutate_bunnies();
-	cout << "List of Bunnies" << endl;
+	message(LIST, nullptr);
 	list_bunnies();
-	cout << "Number of bunnies: " << bunny_count() << endl;
+	message(No_OF_BUNNIES, nullptr);
 }
 
 void bunny_herd::add_bunny()
@@ -295,6 +313,25 @@ void bunny_herd::message(Messages event, bunny* current)
 		{
 			cout << "Bunnies grow. " << endl;
 			break;
+		}
+		case BREED:
+		{
+			cout << "Bunnies breed. " << endl;
+			break;
+		}
+		case LIST:
+		{
+			cout << "List of Bunnies" << endl;
+			break;
+		}
+		case No_OF_BUNNIES:
+		{
+			cout << "Number of bunnies: " << bunny_count() << endl;
+			break;
+		}
+		default:
+		{
+			cout << "Unknown operation!\n";
 		}
 	}
 }

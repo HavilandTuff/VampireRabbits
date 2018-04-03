@@ -29,7 +29,7 @@ int main()
 		cin >> quit;
 		cin.clear();
 		cin.ignore( 1000, '\n' );
-		if(test_herd.bunny_count()==test_herd.mutants_count()&& test_herd.bunny_count() == 0)
+		if(test_herd.bunny_count()==test_herd.mutants_count() || test_herd.bunny_count() == 0)
 		{
 			quit='q';
 			cout << "All bunnies perished. End of game!" << endl;

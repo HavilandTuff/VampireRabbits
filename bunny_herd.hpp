@@ -28,6 +28,9 @@ private:
 		NO_F_BUNNY,
 		NO_M_BUNNY,
 		CULL,
+		BREED,
+		LIST,
+		No_OF_BUNNIES,
 	};
 	bunny* bunnies_list;
 	void add_age();
