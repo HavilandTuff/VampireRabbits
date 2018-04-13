@@ -163,27 +163,19 @@ void bunny_herd::add_age()
 }
 void bunny_herd::cull_bunnies()
 {
-	int b_to_kill = MAX_BUNNY_AGE/2;
-	for(int i=0; i<b_to_kill; i++)
+	int no_to_cull = MAX_BUNNY_COUNT/2;
+	int bunny_to_kill = 0;
+	bunny* temp = nullptr;
+	for(int i=0; i<no_to_cull; i++)
 	{
-		
-	/*
-	bunny* current_bunny=bunnies_list;
-	{
-		while(current_bunny != nullptr)
+		bunny_to_kill = rand()%bunny_count();
+		temp = bunnies_list;
+		for( int j = 0; j<bunny_to_kill; j++)
 		{
-			if(rand()%2 && bunny_count() < 500)
-			{
-				kill_bunny( current_bunny);
-				current_bunny = bunnies_list;
-			}
-			else
-			{
-				current_bunny = current_bunny->next_bunny;
-			}
+			temp = temp->next_bunny;
 		}
+		kill_bunny(temp);
 	}
-	*/
 }
 
 void bunny_herd::breed_bunnies()
