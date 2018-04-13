@@ -26,6 +26,7 @@ bunny::bunny()
 	else
 	name = girls_names[rand()%girls_names.size()];
 	}
+	next_bunny = nullptr;
 }
 int bunny::get_age()
 {

@@ -34,7 +34,7 @@ private:
 	};
 	bunny* bunnies_list;
 	void add_age();
-	void kill_bunny(bunny* &previous, bunny* &current );
+	void kill_bunny(bunny* toKill );
 	void breed_bunnies();
 	void cull_bunnies();
 	void mutate_bunnies();

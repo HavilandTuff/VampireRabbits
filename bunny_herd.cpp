@@ -93,6 +93,7 @@ void bunny_herd::live_bunnies()
 		message(CULL, nullptr);
 		cull_bunnies();
 	}
+	if(mutants_count() != 0)
 	message(HUNT_BEGIN, nullptr);
 	mutate_bunnies();
 	message(LIST, nullptr);
@@ -120,29 +121,30 @@ void bunny_herd::add_bunny()
 	message(BORN, new_bunny);
 }
 
-void bunny_herd::kill_bunny(bunny* &previous, bunny* &current)
+void bunny_herd::kill_bunny(bunny* toKill)
 {
-	
-	
-	if ( previous == nullptr)
+	bunny* curr = bunnies_list;
+	if(toKill == curr)
+	{
+		bunnies_list = curr->next_bunny;
+		message(DIE, toKill);
+		delete toKill;
+	}
+	while(curr != nullptr)
+	{
+		if( curr->next_bunny == toKill)
 		{
-			message(DIE, current);
-			bunnies_list = current->next_bunny;
-			delete current;
-			current = bunnies_list;
+			curr->next_bunny = toKill->next_bunny;
+			message(DIE, toKill);
+			delete toKill;
 		}
-	else
-		{
-			message(DIE, current);
-			previous->next_bunny = current->next_bunny;
-			delete current;
-			current = previous->next_bunny;
-		}
+		else
+		curr = curr->next_bunny;
+	}
 }
 
 void bunny_herd::add_age()
 {
-	bunny* previous = nullptr;
 	bunny* current_bunny=bunnies_list;
 	while(current_bunny != nullptr)
 	{
@@ -150,30 +152,38 @@ void bunny_herd::add_age()
 		(current_bunny->is_mutant() == true && current_bunny->get_age() < MAX_MUTANT_AGE))
 		{
 			current_bunny->grow_bunny();
-			previous = current_bunny;
 			current_bunny = current_bunny->next_bunny;
 		}
 		else
-		kill_bunny( previous, current_bunny);
+		{
+			kill_bunny(current_bunny);
+			current_bunny = bunnies_list;
+		}
 	}
 }
 void bunny_herd::cull_bunnies()
 {
-	
-	bunny* previous = nullptr;
+	int b_to_kill = MAX_BUNNY_AGE/2;
+	for(int i=0; i<b_to_kill; i++)
+	{
+		
+	/*
 	bunny* current_bunny=bunnies_list;
 	{
 		while(current_bunny != nullptr)
 		{
-			if(rand()%2)
-			kill_bunny( previous, current_bunny);
+			if(rand()%2 && bunny_count() < 500)
+			{
+				kill_bunny( current_bunny);
+				current_bunny = bunnies_list;
+			}
 			else
 			{
-				previous = current_bunny;
 				current_bunny = current_bunny->next_bunny;
 			}
 		}
 	}
+	*/
 }
 
 void bunny_herd::breed_bunnies()
@@ -232,7 +242,7 @@ void bunny_herd::mutate_bunnies()
 				message(HUNT_SUCESS, temp);
 				mutated=true;
 			}
-			else
+			else if(temp->is_mutant() == false)
 			{
 				message(HUNT_FAILUR, temp);
 				mutated=true;
