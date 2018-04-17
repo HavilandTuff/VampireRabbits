@@ -7,6 +7,7 @@
 #include <vector>
 #include "bunny.hpp"
 #include "bunny_herd.hpp"
+
 using namespace std;
 
 /************************************MAIN******************************/

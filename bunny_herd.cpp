@@ -1,5 +1,6 @@
 //bunny_herd.cpp
 #include "bunny_herd.hpp"
+#include "tools.hpp"
 using namespace std;
 /*
 class bunny_herd
