@@ -256,85 +256,88 @@ void bunny_herd::message(Messages event, bunny* current)
 	{
 		case BORN:
 		{
-			cout << current->get_name() << " was born!" << endl;
+			printw("%s was born!\n", current->get_name().c_str());
 			break;
 		}
 		case DIE:
 		{
-			cout << "Bunny " << current->get_name() << " died!" << endl;
+			printw("Bunny %s died!\n", current->get_name().c_str());
 			break;
 		}
 		case HUNT_BEGIN:
 		{
-			cout << "Radioactive vampire mutant bunnies go hunting!" << endl;
+			printw("Radioactive vampire mutant bunnies go hunting!\n");
 			break;
 		}
 		case HUNT_FAILUR:
 		{
-			cout << "Bunny " << current->get_name() << " survived vampire attack." << endl;
+			printw("Bunny %s survived vampire attack.\n", current->get_name().c_str());
 			break;
 		}
 		case HUNT_SUCESS:
 		{
-			cout << "Bunny " << current->get_name() << " has been bitten and now is vampire ";
+			printw("Bunny %s has been bitten and now is vampire \n", current->get_name().c_str());
 			current->mutate();
-			cout << current->get_name() << endl;
+			printw(" %s \n", current->get_name().c_str());
 			break;
 		}
 		case NO_GRN_BUNNY:
 		{
-			 cout << "No adult bunnies! Cannot breed!" << endl;
+			 printw("No adult bunnies! Cannot breed!\n");
 			 break;
 		}
 		case NO_F_BUNNY:
 		{
-			cout << "No grown girls! Cannot breed!" << endl;
+			printw( "No grown girls! Cannot breed!\n");
 			break;
 		}
 		case NO_M_BUNNY:
 		{
-			cout << "No boys! Cannot breed!" << endl;
+			printw("No boys! Cannot breed!\n");
 			break;
 		}
 		case BUNNY_STATUS:
 		{
-			cout << "Bunny: " << current->get_name() 
-			<< ", age: " << current->get_age() 
-			<< " sex is: " << current->get_sex();
+			printw("Bunny: %s, age %d, sex is %d", 
+			current->get_name().c_str(), 
+			current->get_age(), 
+			current->get_sex()); 
+			
 			if(current->is_mutant() == true)
-			cout << ", is vampire mutant!" << endl;
+			printw(", is vampire mutant!\n");
 			else
-			cout << endl;
+			printw( "\n");
 			break;
 		}
 		case CULL:
 		{
-			cout << "\n**** May The Hunger Games begin! ****\n" << endl;
+			printw("\n**** May The Hunger Games begin! ****\n");
 			break;
 		}
 		case GROW:
 		{
-			cout << "Bunnies grow. " << endl;
+			printw("Bunnies grow. \n");
 			break;
 		}
 		case BREED:
 		{
-			cout << "Bunnies breed. " << endl;
+			printw("Bunnies breed. \n");
 			break;
 		}
 		case LIST:
 		{
-			cout << "List of Bunnies" << endl;
+			printw("List of Bunnies\n");
 			break;
 		}
 		case No_OF_BUNNIES:
 		{
-			cout << "Number of bunnies: " << bunny_count() << endl;
+			printw("Number of bunnies: %d", bunny_count());
 			break;
 		}
 		default:
 		{
-			cout << "Unknown operation!\n";
+			printw("Unknown operation!\n");
 		}
 	}
 }
+

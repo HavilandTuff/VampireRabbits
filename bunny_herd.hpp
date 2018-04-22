@@ -2,6 +2,8 @@
 #ifndef bunny_herd_hpp
 #define bunny_herd_hpp
 #include <iostream>
+#include <string>
+#include "ncurses.h"
 #include "bunny.hpp"
 //using namespace std;
 class bunny_herd

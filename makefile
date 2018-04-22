@@ -1,6 +1,6 @@
 #makefile for vampire bunny project.
 CC=g++
-CPPFLAGS= -Wall -std=c++11
+CPPFLAGS= -Wall -std=c++11 -lncurses
 DEPS= names.hpp bunny.hpp bunny_herd.hpp 
 OBJ= main.o bunny.o bunny_herd.o 
 
