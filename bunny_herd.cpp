@@ -1,6 +1,6 @@
 //bunny_herd.cpp
 #include "bunny_herd.hpp"
-#include "tools.hpp"
+#include "game_field.hpp"
 using namespace std;
 /*
 class bunny_herd
@@ -276,7 +276,7 @@ void bunny_herd::message(Messages event, bunny* current)
 		}
 		case HUNT_SUCESS:
 		{
-			printw("Bunny %s has been bitten and now is vampire \n", current->get_name().c_str());
+			printw("Bunny %s has been bitten and now is vampire ", current->get_name().c_str());
 			current->mutate();
 			printw(" %s \n", current->get_name().c_str());
 			break;

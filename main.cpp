@@ -7,9 +7,31 @@
 #include <vector>
 #include "bunny.hpp"
 #include "bunny_herd.hpp"
+#include "game_field.hpp"
 #include "ncurses.h"
 
 using namespace std;
+void draw_bunny_fields()
+{
+	Green_fields bunny_fields;
+	for(int i; i<10; i++)
+	{
+		for(int j=0; j<10; j++)
+		{
+			if(bunny_fields.field_state(i, j) == EMPTY)
+			{
+				mvprintw(i,j, "o");
+			}
+			else
+			{
+				mvprintw(i,j, "x");
+			}
+		}
+		printw("\n");
+	}
+	refresh();
+	getch();
+}
 
 /************************************MAIN******************************/
 int main()
@@ -51,7 +73,9 @@ int main()
 		}
 		refresh();
 	}
+	draw_bunny_fields();
 	refresh();
+	getch();
 	endwin();
 	return 0;
 }
