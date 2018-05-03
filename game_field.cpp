@@ -28,7 +28,6 @@ Green_fields::Green_fields()
 	{
 		for(int j=0; j<100; j++)
 		{
-			fields[i][j].is_empty = true;
 			fields[i][j].bunny_on_field = nullptr;
 		}
 	}
@@ -39,7 +38,7 @@ Status Green_fields::field_state(int y, int x)
 	{
 		return ERROR;
 	}
-	else if( is_empty(y,x))
+	else if( fields[y][x].bunny_on_field == nullptr)
 	{
 		return EMPTY;
 	}
@@ -68,9 +67,31 @@ Status Green_fields::field_state(int y, int x)
 	}
 	
 }
-void Green_fields::draw_field()
+void Green_fields::draw_field(Status field_state, WINDOW *field)
 {
+	switch( field_state )
+	{
+		case EMPTY:
+		wprintw(field, "_");
+		break;
+		case VAMPIRE:
+		wprintw(field, "V");
+		break;
+		case BABY_MALE:
+		wprintw(field, "m");
+		break;
+		case GROWN_MALE:
+		wprintw(field, "M");
+		break;
+		case BABY_FEMALE:
+		wprintw(field, "f");
+		break;
+		case GROWN_FEMALE:
+		wprintw(field, "F");
+		break;
+	}
 }
+/*
 bool Green_fields::is_empty(int y, int x)
 {
 	if(y < 100 && x < 100)
@@ -78,3 +99,4 @@ bool Green_fields::is_empty(int y, int x)
 	return fields[y][x].is_empty == true ? true:false;
 	}
 }
+*/
