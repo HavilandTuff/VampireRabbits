@@ -67,12 +67,13 @@ Status Green_fields::field_state(int y, int x)
 	}
 	
 }
-void Green_fields::draw_field(Status field_state, WINDOW *field)
+void Green_fields::draw_field(int y, int x, WINDOW *field)
 {
-	switch( field_state )
+	Status status = field_state(y, x);
+	switch( status )
 	{
 		case EMPTY:
-		wprintw(field, "_");
+		wprintw(field, " ");
 		break;
 		case VAMPIRE:
 		wprintw(field, "V");

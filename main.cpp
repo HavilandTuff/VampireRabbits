@@ -8,51 +8,68 @@
 #include "bunny.hpp"
 #include "bunny_herd.hpp"
 #include "game_field.hpp"
-#include "ncurses.h"
 
 using namespace std;
-void draw_bunny_fields()
-{
-	Green_fields bunny_fields;
-	for(int i; i<10; i++)
-	{
-		for(int j=0; j<10; j++)
-		{
-			if(bunny_fields.field_state(i, j) == EMPTY)
-			{
-				mvprintw(i,j, "o");
-			}
-			else
-			{
-				mvprintw(i,j, "x");
-			}
-		}
-		printw("\n");
-	}
-	refresh();
-	getch();
-}
 
+vector <string> Log_text;
 /************************************MAIN******************************/
 int main()
 {
 	srand(time(NULL));
-	int delay = 10; //turn delay in tenth of second. Use values from 1 to 255.
+	int window_width = 50;
+	int title_height = 3;
+	int field_height = 10;
+	int log_height = 7;
+	int sposy = 1;
+	int sposx = 1;
 	initscr();
-	noecho();
-	halfdelay(delay);
-	char quit = ' ';
-	int turn_counter = 0;
-	
 	bunny_herd test_herd;
 	for(int i=0; i<5; i++)
 	{
 		test_herd.add_bunny();
 	}
+
+	noecho();
+	cbreak();
+	start_color();
+	init_pair(1, COLOR_RED, COLOR_WHITE); 	//Title
+	init_pair(2, COLOR_WHITE, COLOR_GREEN); //Bunny fields
+	init_pair(3, COLOR_WHITE, COLOR_BLUE);	//Log window
+	WINDOW *Title = newwin(title_height, window_width, sposy, sposx);
+	WINDOW *Bunny_field = newwin(field_height, window_width, sposy+title_height, sposx);
+	WINDOW *Log = newwin(log_height, window_width, sposy+title_height+field_height, sposx);
+	scrollok(Log, TRUE);
+	char quit = ' ';
+	int turn_counter = 0;
+	wbkgd(Title, COLOR_PAIR(1));
+	wbkgd(Bunny_field, COLOR_PAIR(2));
+	wbkgd(Log, COLOR_PAIR(3));
+	wprintw(Title, "Radioactive Vampire Bunny Attack!");
 	refresh();
+	wrefresh(Title);
 	while( quit != 'q' && quit != 'Q')
 	{
+		wrefresh(Bunny_field);
+		test_herd.live_bunnies();
+		for( int i=0; i<Log_text.size(); i++)
+		{
+			wprintw(Log, "%s", Log_text[i].c_str());
+			napms(100);
+			wrefresh(Log);
+		}
+
+
 		quit = getch();
+		//napms(200);
+		Log_text.clear();
+	}
+
+	/*
+
+	refresh();
+
+	{
+
 		clear();
 		if(quit == ERR || (quit != 'q'&& quit != 'Q'))
 		{
@@ -60,7 +77,7 @@ int main()
 		test_herd.live_bunnies();
 		turn_counter++;
 		printw("\nTo finish press 'q' or any key to continue\n");
-		
+
 		if(test_herd.bunny_count() == test_herd.mutants_count())
 			{
 				clear();
@@ -69,13 +86,14 @@ int main()
 				refresh();
 				getch();
 			}
-		
+
 		}
 		refresh();
 	}
 	draw_bunny_fields();
 	refresh();
-	getch();
+	*/
+	//getch();
 	endwin();
 	return 0;
 }

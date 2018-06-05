@@ -1,6 +1,8 @@
 //bunny_herd.cpp
 #include "bunny_herd.hpp"
 #include "game_field.hpp"
+#include "ncurses.h"
+#include <vector>
 using namespace std;
 /*
 class bunny_herd
@@ -98,7 +100,7 @@ void bunny_herd::live_bunnies()
 	message(HUNT_BEGIN, nullptr);
 	mutate_bunnies();
 	message(LIST, nullptr);
-	list_bunnies();
+	//list_bunnies();
 	message(No_OF_BUNNIES, nullptr);
 }
 
@@ -122,7 +124,7 @@ void bunny_herd::add_bunny()
 	message(BORN, new_bunny);
 }
 
-void bunny_herd::kill_bunny(bunny* toKill)
+void bunny_herd::kill_bunny(bunny *toKill)
 {
 	bunny* curr = bunnies_list;
 	if(toKill == curr)
@@ -250,93 +252,93 @@ void bunny_herd::mutate_bunnies()
 	}
 	}
 }	
-void bunny_herd::message(Messages event, bunny* current)
+void bunny_herd::message(Messages bunny_event, bunny* current )
 {
-	switch(event)
+	
+	switch(bunny_event)
 	{
 		case BORN:
 		{
-			printw("%s was born!\n", current->get_name().c_str());
+			Log_text.push_back(current->get_name() + " was born.\n");
 			break;
 		}
 		case DIE:
 		{
-			printw("Bunny %s died!\n", current->get_name().c_str());
+			Log_text.push_back("Bunny " + current->get_name() + " died!\n");
 			break;
 		}
 		case HUNT_BEGIN:
 		{
-			printw("Radioactive vampire mutant bunnies go hunting!\n");
+			Log_text.push_back("Radioactive vampire mutant bunnies go hunting!\n");
 			break;
 		}
 		case HUNT_FAILUR:
 		{
-			printw("Bunny %s survived vampire attack.\n", current->get_name().c_str());
+			Log_text.push_back("Bunny "+ current->get_name() + " survived vampire attack.\n");
 			break;
 		}
 		case HUNT_SUCESS:
 		{
-			printw("Bunny %s has been bitten and now is vampire ", current->get_name().c_str());
+			Log_text.push_back("Bunny " + current->get_name() + " has been bitten and now is vampire:");
 			current->mutate();
-			printw(" %s \n", current->get_name().c_str());
+			Log_text.push_back(current->get_name() + "\n");
 			break;
 		}
 		case NO_GRN_BUNNY:
 		{
-			 printw("No adult bunnies! Cannot breed!\n");
+			 Log_text.push_back("No adult bunnies! Cannot breed!\n");
 			 break;
 		}
 		case NO_F_BUNNY:
 		{
-			printw( "No grown girls! Cannot breed!\n");
+			Log_text.push_back( "No grown girls! Cannot breed!\n");
 			break;
 		}
 		case NO_M_BUNNY:
 		{
-			printw("No boys! Cannot breed!\n");
+			Log_text.push_back("No boys! Cannot breed!\n");
 			break;
 		}
 		case BUNNY_STATUS:
 		{
-			printw("Bunny: %s, age %d, sex is %d", 
-			current->get_name().c_str(), 
-			current->get_age(), 
-			current->get_sex()); 
+			Log_text.push_back("Bunny: " + current->get_name() + ", age " 
+			+ to_string(current->get_age()) + ", sex is "
+			+ to_string(current->get_sex())); 
 			
 			if(current->is_mutant() == true)
-			printw(", is vampire mutant!\n");
+			Log_text.push_back("is vampire mutant!");
 			else
-			printw( "\n");
+			Log_text.push_back( "\n");
 			break;
 		}
 		case CULL:
 		{
-			printw("\n**** May The Hunger Games begin! ****\n");
+			Log_text.push_back("\n**** May The Hunger Games begin! ****\n");
 			break;
 		}
 		case GROW:
 		{
-			printw("Bunnies grow. \n");
+			Log_text.push_back("Bunnies grow.\n");
 			break;
 		}
 		case BREED:
 		{
-			printw("Bunnies breed. \n");
+			Log_text.push_back("Bunnies breed.\n");
 			break;
 		}
 		case LIST:
 		{
-			printw("List of Bunnies\n");
+			Log_text.push_back("List of Bunnies\n");
 			break;
 		}
 		case No_OF_BUNNIES:
 		{
-			printw("Number of bunnies: %d", bunny_count());
+			Log_text.push_back("Number of bunnies: " + to_string(bunny_count()));
 			break;
 		}
 		default:
 		{
-			printw("Unknown operation!\n");
+			Log_text.push_back("Unknown operation!\n");
 		}
 	}
 }

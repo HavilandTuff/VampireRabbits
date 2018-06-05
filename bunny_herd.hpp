@@ -3,9 +3,11 @@
 #define bunny_herd_hpp
 #include <iostream>
 #include <string>
+#include <vector>
 #include "ncurses.h"
 #include "bunny.hpp"
-//using namespace std;
+using namespace std;
+extern vector <string> Log_text;
 class bunny_herd
 {
 public:
@@ -36,11 +38,11 @@ private:
 	};
 	bunny* bunnies_list;
 	void add_age();
-	void kill_bunny(bunny* toKill );
+	void kill_bunny(bunny *toKill );
 	void breed_bunnies();
 	void cull_bunnies();
 	void mutate_bunnies();
-	void message(Messages event, bunny* current);
+	void message(Messages bunny_event, bunny* current);
 	
 };
 #endif
