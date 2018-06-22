@@ -47,6 +47,7 @@ private:
 bunny_herd::bunny_herd()
 {
 	bunnies_list=nullptr;
+	bunny_field = new Green_fields;
 }
 
 int bunny_herd::bunny_count()
@@ -85,7 +86,7 @@ void bunny_herd::list_bunnies()
 	}
 }
 
-void bunny_herd::live_bunnies()
+Green_fields* bunny_herd::live_bunnies()
 {
 	message(GROW, nullptr);
 	add_age();
@@ -102,14 +103,17 @@ void bunny_herd::live_bunnies()
 	message(LIST, nullptr);
 	//list_bunnies();
 	message(No_OF_BUNNIES, nullptr);
+	return bunny_field;
 }
 
 void bunny_herd::add_bunny()
 {
 	bunny* new_bunny = new bunny;
+	put_bunny_on_field(new_bunny);
 	if(bunnies_list == nullptr)
 	{
 		bunnies_list = new_bunny;
+		
 	}
 	else
 	{
@@ -122,6 +126,7 @@ void bunny_herd::add_bunny()
 		new_bunny->next_bunny = nullptr;
 	}
 	message(BORN, new_bunny);
+	
 }
 
 void bunny_herd::kill_bunny(bunny *toKill)
@@ -133,6 +138,8 @@ void bunny_herd::kill_bunny(bunny *toKill)
 		message(DIE, toKill);
 		delete toKill;
 	}
+	else
+	{
 	while(curr != nullptr)
 	{
 		if( curr->next_bunny == toKill)
@@ -143,6 +150,7 @@ void bunny_herd::kill_bunny(bunny *toKill)
 		}
 		else
 		curr = curr->next_bunny;
+	}
 	}
 }
 
@@ -342,4 +350,21 @@ void bunny_herd::message(Messages bunny_event, bunny* current )
 		}
 	}
 }
-
+void bunny_herd::put_bunny_on_field(bunny* bunny_to_put)
+{
+	int y, x;
+	Status bunny_state = bunny_to_put->get_status();
+	bool is_set = false;
+	do
+	{
+		y=rand()%field_height;
+		x=rand()%window_width;
+		if(bunny_field->field_state(y, x) == EMPTY)
+		{
+			bunny_field->set_field(y, x, bunny_state);
+			is_set=true;
+		}
+		
+	}while(is_set == false);
+	bunny_to_put->set_bunny_position(y, x);
+}

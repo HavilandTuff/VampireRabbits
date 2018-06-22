@@ -1,24 +1,22 @@
 //Table to store gameboard.
 #ifndef game_field_hpp
 #define game_field_hpp
-#include "bunny.hpp"
-#include <ncurses.h>
 
+const int window_width = 50;
+const int title_height = 3;
+const int field_height = 50;
+const int log_height = 7;
 enum Status {EMPTY, GROWN_MALE, GROWN_FEMALE, BABY_MALE, BABY_FEMALE, VAMPIRE, ERROR };
-//Field class is 100x100 table containig informations about bunnies position.
+
 class Green_fields
 {
 	public:
 	Green_fields();
+	void set_field(int y, int x, Status bunny_state);
 	Status field_state(int y, int x);
-	void draw_field(int y, int x, WINDOW *field);
+	char print_field(int y, int x);
 	private:
-	void put_bunny(int y, int x, bunny* to_put);
-	void remove_bunny(int y, int x);
-	struct Field
-	{
-		bunny* bunny_on_field;
-	};
-	Field fields[100][100];
+	Status fields[window_width][field_height];
 };
+
 #endif

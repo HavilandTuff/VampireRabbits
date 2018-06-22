@@ -12,14 +12,12 @@
 using namespace std;
 
 vector <string> Log_text;
+Green_fields bunny_fields;
 /************************************MAIN******************************/
 int main()
 {
 	srand(time(NULL));
-	int window_width = 50;
-	int title_height = 3;
-	int field_height = 10;
-	int log_height = 7;
+	
 	int sposy = 1;
 	int sposx = 1;
 	initscr();
@@ -28,6 +26,7 @@ int main()
 	{
 		test_herd.add_bunny();
 	}
+	Green_fields Bunny_fields;
 
 	noecho();
 	cbreak();
@@ -40,7 +39,7 @@ int main()
 	WINDOW *Log = newwin(log_height, window_width, sposy+title_height+field_height, sposx);
 	scrollok(Log, TRUE);
 	char quit = ' ';
-	int turn_counter = 0;
+	int turn_counter = 1;
 	wbkgd(Title, COLOR_PAIR(1));
 	wbkgd(Bunny_field, COLOR_PAIR(2));
 	wbkgd(Log, COLOR_PAIR(3));
@@ -49,7 +48,14 @@ int main()
 	wrefresh(Title);
 	while( quit != 'q' && quit != 'Q')
 	{
-		wrefresh(Bunny_field);
+		for(int i=0; i<field_height; i++)
+		{
+			for(int j=0; j<window_width; j++)
+			{
+				mvwprintw(Bunny_field, i, j, "%c", Bunny_fields.print_field(i, j));
+			}
+		}
+		wrefresh(Bunny_field); 
 		test_herd.live_bunnies();
 		for( int i=0; i<Log_text.size(); i++)
 		{
@@ -98,3 +104,4 @@ int main()
 	return 0;
 }
 
+/***********************************************************************************/

@@ -15,7 +15,7 @@ public:
 	int bunny_count();
 	int mutants_count();
 	void list_bunnies();
-	void live_bunnies();
+	Green_fields* live_bunnies();
 	void add_bunny(); 
 	void get_MAX_BUNNY_COUNT();
 private:
@@ -37,12 +37,14 @@ private:
 		No_OF_BUNNIES,
 	};
 	bunny* bunnies_list;
+	Green_fields* bunny_field;
 	void add_age();
 	void kill_bunny(bunny *toKill );
 	void breed_bunnies();
 	void cull_bunnies();
 	void mutate_bunnies();
 	void message(Messages bunny_event, bunny* current);
+	void put_bunny_on_field(bunny* bunny_to_put);
 	
 };
 #endif
